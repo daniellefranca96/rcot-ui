@@ -115,14 +115,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		let modelName = selectModel.options[selectModel.selectedIndex].value;
 		let promptVersion = selectPromptVersion[selectPromptVersion.selectedIndex].value;
 		
+		rcotProcess['resources'] = rcotProcess['resources'] != '' ? rcotProcess['resources'] : "(default: unlimited)";
+		rcotProcess['maxLoops'] = rcotProcess['maxLoops'] != '' ? rcotProcess['maxLoops'] : "(default: as much as needed)";
+		
 		let prompt = '';
 		if (promptVersion == "v1") {
             prompt = promptV1.replace("(fill the goal)", rcotProcess['goal'])
-                             .replace("(fill the expected result)", rcotProcess['expectedResult']);
+                             .replace("(fill the expected result)", rcotProcess['expectedResult'])
+							 .replace("(default: unlimited)", rcotProcess['resources'])
+                             .replace("(default: as much as needed)", rcotProcess['maxLoops']);
         } else {
             prompt = promptV2.replace("(fill the goal)", rcotProcess['goal'])
                              .replace("(fill the expected result)", rcotProcess['expectedResult'])
-                             .replace("(default: unlimited, min: )", rcotProcess['resources'])
+                             .replace("(default: unlimited)", rcotProcess['resources'])
                              .replace("(default: as much as needed)", rcotProcess['maxLoops']);
         }
 		
